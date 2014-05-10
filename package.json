@@ -1,0 +1,15 @@
+{
+  "name": "atom-jsfmt",
+  "main": "./main.js",
+  "version": "0.0.1",
+  "repository": {
+    "url": "https://github.com/bichiliad/atom-jsfmt.git",
+    "type": "git"
+  },
+  "engines": {
+    "atom": "^0.94.0"
+  },
+  "dependencies": {
+    "jsfmt": "^0.1.1"
+  }
+}
