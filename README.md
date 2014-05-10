@@ -1,8 +1,8 @@
 atom-jsfmt
 ==========
 
-Automatically run `jsfmt` every time you save a javascript source file!
-
+Automatically run `jsfmt` every time you save a javascript source file! It
+effectively runs `jsfmt -fw [your file].js` on save.
 
 Usage
 -----
@@ -17,6 +17,12 @@ npm install -g jsfmt
 If you have a custom location for the `jsfmt` binary, set the `Path To Jsfmt`
 option accordingly.
 
+
+To do
+-----
+
+ - Allow for input of custom rules
+ - Flag lines with errors
 
 Credit
 ------
