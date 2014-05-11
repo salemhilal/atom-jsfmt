@@ -1,8 +1,9 @@
 atom-jsfmt
 ==========
 
-Automatically run `jsfmt` every time you save a javascript source file! It
-effectively runs `jsfmt -fw [your file].js` on save.
+Automatically run `jsfmt` every time you save a javascript source file.
+
+It effectively runs `jsfmt -fw [your file].js` on save.
 
 Usage
 -----

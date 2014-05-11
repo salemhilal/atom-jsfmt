@@ -1,6 +1,6 @@
 {
   "name": "atom-jsfmt",
-  "description": "A simple wrapper for jsfmt",
+  "description": "jsfmt integration with Atom",
   "main": "./main.js",
   "version": "0.1.2",
   "repository": {
