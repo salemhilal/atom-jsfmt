@@ -2,7 +2,7 @@
   "name": "atom-jsfmt",
   "description": "jsfmt integration with Atom",
   "main": "./main.js",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "repository": {
     "url": "https://github.com/bichiliad/atom-jsfmt.git",
     "type": "git"
