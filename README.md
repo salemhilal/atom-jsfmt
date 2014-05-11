@@ -9,10 +9,11 @@ Usage
 -----
 
 
-Make sure you have `jsfmt` installed:
+Make sure you have `jsfmt` installed, and then just install `atom-jsfmt` as you would any other package
 
 ```bash
 npm install -g jsfmt
+apm install atom-jsfmt
 ```
 
 If you have a custom location for the `jsfmt` binary, set the `Path To Jsfmt`
