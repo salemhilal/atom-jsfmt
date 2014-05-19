@@ -4,6 +4,7 @@ atom-jsfmt
 Automatically run `jsfmt` every time you save a javascript source file.
 
 It effectively runs `jsfmt -fw [your file].js` on save.
+If an error occurs, it is displayed at the bottom of the editor. 
 
 Usage
 -----
