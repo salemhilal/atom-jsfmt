@@ -35,15 +35,14 @@ Credit
  - Inspiration taken from [Darkhelmet's gofmt package][gofmt]
 
 
-
 Changelog
 ---------
-The changelog can be viewed [here][changelog]
+The changelog can be viewed [here][changelog].
 
 
 License
 -------
-Atom-jsfmt is licensed under the MIT license, which can be viewed [here][license]
+Atom-jsfmt is licensed under the MIT license, which can be viewed [here][license].
 
 
 [gofmt]:https://github.com/darkhelmet/atom-gofmt
