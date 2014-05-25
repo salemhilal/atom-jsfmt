@@ -46,7 +46,7 @@ Credit
 ------
 
  - [`jsfmt`][jsfmt] is written and maintained by the good folks at [rdio][rdio].
- - Inspiration taken from [Darkhelmet's gofmt package][gofmt]
+ - Inspiration taken from [Darkhelmet's gofmt package][gofmt].
 
 
 Changelog
