@@ -4,7 +4,7 @@ module.exports =
 
   # Configuration
   configDefaults:
-    pathToJsfmt: 'jsfmt' # Where the jsfmt binary is located
+    pathToJsfmt: '/usr/local/bin/jsfmt' # Where the jsfmt binary is located
     showErrors: true # Whether or not to show the error bar
     formatOnSave: true # Whether or not to format automatically
 

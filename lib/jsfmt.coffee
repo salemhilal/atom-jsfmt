@@ -27,7 +27,10 @@ class Jsfmt
   # Formats the given editor
   @format: (editor) ->
     args = ['-fw', editor.getUri()] # We may not need the -f flag anymore
-    jsfmtProc = spawn(atom.config.get('atom-jsfmt.pathToJsfmt'), args)
+    jsfmtBin = atom.config.get('atom-jsfmt.pathToJsfmt').trim()
+    console.log 'proc: "' + jsfmtBin + '"'
+    console.log 'file: "' + args[1] + '"'
+    jsfmtProc = spawn jsfmtBin, args
 
     # Reload the buffer when the process exits
     jsfmtProc.on 'exit', (code) ->
@@ -39,7 +42,7 @@ class Jsfmt
       errPattern = /.*\[(.*).*\].*lineNumber: (\d+), column: (\d+).*/
       errInfo = errPattern.exec data.toString()
 
-      return console.error err if !errInfo or errInfo.length != 4
+      return console.error data.toString() if !errInfo or errInfo.length != 4
 
       [_, msg, line, col] = errInfo
 
