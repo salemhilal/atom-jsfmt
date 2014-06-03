@@ -53,8 +53,8 @@ class Jsfmt
 
     # Log / show any errors
     jsfmtProc.stderr.on 'data', (data) ->
-      errPattern = /.*\[(.*).*\].*lineNumber: (\d+), column: (\d+).*/
-      errInfo = errPattern.exec data.toString()
+      errPattern = /.*\[Error:(.*)\].*/
+      errInfo = errPattern.exec(data.toString())
 
       console.log "jsfmt error: ", data.toString()
 
@@ -64,13 +64,14 @@ class Jsfmt
 
       # Can we show errors?
       if atom.config.get 'atom-jsfmt.showErrors'
-        if !errInfo or errInfo.length != 4
+        console.log errInfo
+        if !errInfo or errInfo.length != 2
           msg = 'An unhandled error occurred. Please check the console ' +
                 'for more details.'
           editor._jsfmt.errorView.setMessage(msg)
           editor._jsfmt.errorView.show()
         else
-          [_, msg, line, col] = errInfo
+          [_, msg] = errInfo
 
           editor._jsfmt.errorView.setMessage(msg)
           editor._jsfmt.errorView.show()
