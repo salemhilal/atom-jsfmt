@@ -4,12 +4,12 @@ module.exports =
 
 class JsfmtErrorView extends View
 
-  initialize: ->
-    @hide()
+  # No errors until we specify one.
+  initialize: -> @hide()
 
   # Essentially contains just one tool panel, with one message
   @content: ->
-    @div class: 'jsfmt hellotheresmallchildren', =>
+    @div click: 'hide', class: 'jsfmt', =>
       @div class: 'tool-panel panel-bottom padded', =>
         @span class: 'text-error', '⚠ '
         @span outlet: 'message', ''
