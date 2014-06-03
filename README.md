@@ -18,14 +18,14 @@ npm install -g jsfmt
 apm install atom-jsfmt
 # Or search for / install atom-jsfmt in Atom's package browser
 ```
-If you have `jsfmt` installed in a different location, be sure to set this location in the
+If you have `jsfmt` installed in a location other than `/usr/local/bin/jsfmt`, be sure to set this location in the
 `atom-jsfmt` preferences (under "Path To Jsfmt").
 
 Options
 -------
 
- - **Path To Jsfmt**: This is the path to the `jsfmt` binary. Defaults to `jsfmt`.
-   Set this if your binary isn't in your `$PATH`.
+ - **Path To Jsfmt**: This is the path to the `jsfmt` binary. Defaults to `/usr/local/bin/jsfmt`.
+   Note that binaries on your `$PATH` [may not currently be accessible to Atom][env].
  - **Show Errors**: Whether or not you want to see error messages. You probably do.
    This is set to `true` by default.
  - **Format On Save**: Whether or not you automatically want to format your javascript
@@ -63,4 +63,5 @@ Atom-jsfmt is licensed under the MIT license, which can be viewed [here][license
 [jsfmt]:http://rdio.github.io/jsfmt/
 [rdio]:https://github.com/rdio
 [changelog]:./CHANGELOG.md
-[license]: ./LICENSE.md
+[license]:./LICENSE.md
+[env]:http://discuss.atom.io/t/atom-command-doesnt-pass-environment-variables-to-atom/1596

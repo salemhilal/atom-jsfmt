@@ -28,8 +28,7 @@ class Jsfmt
   @format: (editor) ->
     args = ['-fw', editor.getUri()] # We may not need the -f flag anymore
     jsfmtBin = atom.config.get('atom-jsfmt.pathToJsfmt').trim()
-    console.log 'proc: "' + jsfmtBin + '"'
-    console.log 'file: "' + args[1] + '"'
+
     jsfmtProc = spawn jsfmtBin, args
 
     # Reload the buffer when the process exits
@@ -37,18 +36,45 @@ class Jsfmt
       console.error 'Non-zero exit code', code if code != 0
       editor.getBuffer().reload()
 
+    jsfmtProc.on 'error', (err) ->
+      if atom.config.get 'atom-jsfmt.showErrors'
+
+        if /.*ENOENT.*/.test(err.toString())
+          msg = 'I couldn\'t find jsfmt on your computer. ' +
+                'Check your "pathToJsfmt" and try again.'
+          editor._jsfmt.errorView.setMessage(msg)
+          editor._jsfmt.errorView.show()
+        else
+          msg = 'An unhandled error occurred. Please check the console ' +
+                'for more details.'
+          editor._jsfmt.errorView.setMessage(msg)
+          editor._jsfmt.errorView.show()
+          console.log "jsfmt error: ", err.toString()
+
     # Log / show any errors
     jsfmtProc.stderr.on 'data', (data) ->
       errPattern = /.*\[(.*).*\].*lineNumber: (\d+), column: (\d+).*/
       errInfo = errPattern.exec data.toString()
 
-      return console.error data.toString() if !errInfo or errInfo.length != 4
+      console.log "jsfmt error: ", data.toString()
 
-      [_, msg, line, col] = errInfo
+      # This is caught by the on 'error' handler
+      # TODO: Rethink this.
+      return if /.*No such file or directory.*/.test data.toString()
 
+      # Can we show errors?
       if atom.config.get 'atom-jsfmt.showErrors'
-        editor._jsfmt.errorView.setMessage(msg)
-        editor._jsfmt.errorView.show()
+        if !errInfo or errInfo.length != 4
+          msg = 'An unhandled error occurred. Please check the console ' +
+                'for more details.'
+          editor._jsfmt.errorView.setMessage(msg)
+          editor._jsfmt.errorView.show()
+        else
+          [_, msg, line, col] = errInfo
+
+          editor._jsfmt.errorView.setMessage(msg)
+          editor._jsfmt.errorView.show()
+
 
   # Formats the currently active editor
   # TODO: This currently acts on the file on disk, not on what's in the editor.
