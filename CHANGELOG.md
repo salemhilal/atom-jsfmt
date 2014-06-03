@@ -4,7 +4,9 @@ Changelog
 v0.4.1
 ======
  * Ported everything to coffeescript.
+ * Click-to-dismiss errors
  * Changed default `jsfmt` location to `/usr/local/bin/jsfmt` (Addresses issue #1)
+ * You are now told if `jsfmt` isn't where you say it is.
  * Fixed a bug with the way unhandled errors were being logged
 
 v0.4.0
