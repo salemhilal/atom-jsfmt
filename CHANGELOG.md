@@ -1,7 +1,7 @@
 Changelog
 ---------
 
-v0.4.1
+v0.5.0
 ======
  * Ported everything to coffeescript.
  * Click-to-dismiss errors
