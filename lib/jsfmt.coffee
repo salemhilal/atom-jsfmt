@@ -33,17 +33,25 @@ class Jsfmt
 
     # Reload the buffer when the process exits
     jsfmtProc.on 'exit', (code) ->
-      console.error 'Non-zero exit code', code if code != 0
+      # Handle error code
+      if code == 127
+        msg = 'I couldn\'t find jsfmt on your computer. ' +
+              'Check your "pathToJsfmt" and try again.'
+        editor._jsfmt.errorView.setMessage(msg)
+        editor._jsfmt.errorView.show()
+      else
+        console.log 'jsfmt error: unhandled exit code', code if code != 0
+
+      # Refresh editor anyways
       editor.getBuffer().reload()
 
     jsfmtProc.on 'error', (err) ->
+      console.log "error handler: ", err
       if atom.config.get 'atom-jsfmt.showErrors'
 
         if /.*ENOENT.*/.test(err.toString())
-          msg = 'I couldn\'t find jsfmt on your computer. ' +
-                'Check your "pathToJsfmt" and try again.'
-          editor._jsfmt.errorView.setMessage(msg)
-          editor._jsfmt.errorView.show()
+          # Missing jsfmt binary
+          console.log "jsfmt error: Can't find your binary"
         else
           msg = 'An unhandled error occurred. Please check the console ' +
                 'for more details.'
