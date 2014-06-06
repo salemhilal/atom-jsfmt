@@ -12,28 +12,42 @@ module.exports =
 class JsfmtRunner
   
   @start: =>
+    # Commands
     atom.workspaceView.command 'atom-jsfmt:format', => @formatCurrent()
+    atom.workspaceView.command 'atom-jsfmt:format-all-open-files', => @formatAllOpen()
+    
+    # Editor listeners
     atom.workspaceView.eachEditorView @registerEditor
     
     
   @registerEditor: (editorView) =>
     editor = editorView.getEditor()
     
-    errorView = new ErrorView()
-    editorView.append(errorView)
+    # Editor may be created before view
+    if !editor._jsfmt?.errorView
+      errorView = new ErrorView()
+      editorView.append(errorView)
     
-    editor._jsfmt = {errorView}
+      editor._jsfmt = {errorView}
+    
+    else
+      editorView.append(editor._jsfmt.errorView);
     
     editor.getBuffer().on 'saved' , =>
       editor._jsfmt.errorView.hide()
       shouldFormat = atom.config.get 'atom-jsfmt.formatOnSave' 
       
-      if shouldFormat and editor.getGrammar().scopeName == 'source.js'
+      if shouldFormat and @editorIsJs editor
         @format(editor)
   
   
   @format: (editor) ->
-    errorView = editor._jsfmt.errorView
+    # May not be a view for the editor yet.
+    if !editor._jsfmt
+      errorView = new ErrorView()
+      editor._jsfmt = {errorView}
+      
+    errorView = editor._jsfmt?.errorView
     buff = editor.getBuffer()
     oldJs = buff.getText()
     newJs = ''
@@ -53,5 +67,12 @@ class JsfmtRunner
   
   @formatCurrent: () ->
     editor = atom.workspace.getActiveEditor()
-    @format editor if editor.getGrammar().scopeName == 'source.js'
+    @format editor if @editorIsJs editor
+    
+  @formatAllOpen: () ->
+    editors = atom.workspace.getEditors()
+    @format editor for editor in editors when @editorIsJs editor
+    
+  @editorIsJs: (editor) ->
+    return editor.getGrammar().scopeName is 'source.js'
     
