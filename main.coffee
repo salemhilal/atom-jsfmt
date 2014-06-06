@@ -10,5 +10,4 @@ module.exports =
 
   # Start things up
   activate: ->
-    process.env.PATH+=":/usr/local/bin"
     JsfmtRunner.start()

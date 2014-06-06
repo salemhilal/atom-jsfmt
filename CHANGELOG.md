@@ -1,6 +1,20 @@
 Changelog
 ---------
 
+v0.6.0
+======
+ * No longer requires a binary (uses pre-release `jsfmt` with a nicer api)
+ * Format across all open editors
+ * Optionally saves after formatting (off by default)
+ * Merge edits via diff, rather than by replacement (faster for larger files).
+ * Disk no longer more up-to-date then editor (oops).
+ * No need to enhance path anymore. 
+ * Just pretty much works way better.
+ 
+v0.5.1
+======
+ * Enhances path before running binary.
+
 v0.5.0
 ======
  * Ported everything to coffeescript.
