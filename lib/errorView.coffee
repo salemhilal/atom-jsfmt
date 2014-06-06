@@ -17,3 +17,4 @@ class JsfmtErrorView extends View
   # Sets the error message
   setMessage: (msg) ->
     @message.text(msg)
+    @show()

@@ -1,4 +1,8 @@
+#
+# JsfmtRunner - Runs jsfmt on your code. 
 # This replaces jsfmt.coffee and doesn't rely on spawning a child process
+#
+
 ErrorView = require './errorView'
 jsfmt = require 'jsfmt'
 fs = require 'fs'
@@ -10,15 +14,6 @@ class JsfmtRunner
   @start: =>
     atom.workspaceView.command 'atom-jsfmt:format', => @formatCurrent()
     atom.workspaceView.eachEditorView @registerEditor
-    
-    # pathToTest = path.resolve(__dirname, '../test/test.js')
-    # js = fs.readFileSync pathToTest
-    # console.log "HERE GOES"
-    # try
-    #   console.log 'format: ', jsfmt.format(js)
-    #   
-    # catch error
-    #   console.log error, error.message
     
     
   @registerEditor: (editorView) =>
@@ -38,22 +33,25 @@ class JsfmtRunner
   
   
   @format: (editor) ->
+    errorView = editor._jsfmt.errorView
     buff = editor.getBuffer()
     oldJs = buff.getText()
     newJs = ''
     
+    # Attempt to format, log errors
     try
       newJs = jsfmt.format oldJs
     catch error
-      console.log error.message, error
-      #@handleError error
+      console.log 'Jsfmt:', error.message, error
+      errorView.setMessage(error.message)
       return
     
     # Apply diff only. 
-    buff.setTextViaDiff newJs    
+    buff.setTextViaDiff newJs   
+    buff.save() if atom.config.get 'atom-jsfmt.saveAfterFormatting'
     
   
   @formatCurrent: () ->
-    
-  @handleError: () ->
+    editor = atom.workspace.getActiveEditor()
+    @format editor if editor.getGrammar().scopeName == 'source.js'
     
