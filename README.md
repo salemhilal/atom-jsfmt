@@ -40,6 +40,7 @@ To do
  - Add searching functionality
  - Flag lines with errors
  - Add a "Format project" command
+ - Test / fix issues with react editor
 
 
 Credit

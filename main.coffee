@@ -1,4 +1,4 @@
-Jsfmt = require './lib/jsfmt'
+JsfmtRunner = require './lib/jsfmtRunner'
 
 module.exports =
 
@@ -11,4 +11,4 @@ module.exports =
   # Start things up
   activate: ->
     process.env.PATH+=":/usr/local/bin"
-    Jsfmt.start()
+    JsfmtRunner.start()
