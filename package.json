@@ -11,6 +11,6 @@
     "atom": "^0.94.0"
   },
   "dependencies": {
-    "jsfmt": "git://github.com/rdio/jsfmt.git#409621868fc"
+    "jsfmt": "0.3.2"
   }
 }
