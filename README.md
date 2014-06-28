@@ -1,7 +1,8 @@
 atom-jsfmt
 ==========
 
-`atom-jsfmt` is a [`jsfmt`][jsfmt] plugin for the Atom text editor. It's pretty nifty.
+`atom-jsfmt` is a [`jsfmt`][jsfmt] plugin for the Atom text editor. It's pretty nifty.  
+![atom-jsfmt in action](demo.gif)
 
 Features
 --------
