@@ -11,6 +11,6 @@
     "atom": "^0.94.0"
   },
   "dependencies": {
-    "jsfmt": "0.3.2"
+    "jsfmt": "0.4.0"
   }
 }
