@@ -67,12 +67,12 @@ class JsfmtRunner
       newJs = jsfmt.format oldJs
     catch error
       console.log 'Jsfmt:', error.message, error
-      @messagePanel.clear()
-      @messagePanel.attach()
-      @messagePanel.add new LineMessageView
-          message: error.message
-          className: 'text-error'
-          line: @errorToMessage(error.message)
+
+      shouldError = atom.config.get 'atom-jsfmt.showErrors'
+      if shouldError is true
+        @messagePanel.clear()
+        @messagePanel.attach()
+        @messagePanel.add @errorToMessage(error)
 
       # errorView.setMessage(error.message)
       return
@@ -83,7 +83,6 @@ class JsfmtRunner
   # Given an @error, generate an appropriate messageView
   @errorToMessage: (error) =>
     line = @errorToLineNumber error
-    console.log(line)
     if line is -1
       return new PlainMessageView
           message: error.message
@@ -106,10 +105,13 @@ class JsfmtRunner
 
   # Given an error message, returns its line number.
   @errorToLineNumber: (error) ->
-    pattern = /^Line (\d+):.*/
-    matched = error.message?.match(re)
+    return -1 if not error.message?
 
-    if not error.message? or matched.length is not 2
+    pattern = /^Line (\d+):.*/
+    matched = error.message.match(pattern)
+    console.log(matched)
+
+    if matched.length is not 2
       return -1
     else
       return matched[1]

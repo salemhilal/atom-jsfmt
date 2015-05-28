@@ -14,11 +14,6 @@ module.exports =
       description: 'Should files be formatted automatically on save?'
       type: 'boolean'
       default: 'true'
-    saveAfterFormatting:    # Whether or not to save after formatting
-      title: 'Save after formatting'
-      description: 'Should formatting changes be saved immediately?'
-      type: 'boolean'
-      default: 'false'
 
   # Start things up
   activate: ->
