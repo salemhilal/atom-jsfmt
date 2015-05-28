@@ -1,9 +1,14 @@
 Changelog
 ---------
 
+v0.7.1
+======
+ * Fixed issue with line numbers not being parsed properly
+ * Updated README.md
+
 v0.7.0
 ======
- * Removed deprecated Atom API calls
+ * Removed deprecated Atom API calls (see [this issue](https://github.com/atom/atom/issues/6867))
  * Moved to [atom-message-panel](https://github.com/tcarlsen/atom-message-panel)
  * Minor bug fixes.
 
