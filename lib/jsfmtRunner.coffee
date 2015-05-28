@@ -3,14 +3,20 @@
 # This replaces jsfmt.coffee and doesn't rely on spawning a child process
 #
 
-ErrorView = require './errorView'
 jsfmt = require 'jsfmt'
 fs = require 'fs'
 path = require 'path'
+{CompositeDisposable} = require 'atom'
+{MessagePanelView, LineMessageView, PlainMessageView} = require 'atom-message-panel'
+
 
 module.exports =
 class JsfmtRunner
 
+  @messagePanel
+  @disposables = new CompositeDisposable
+
+  # Initialize the class
   @start: =>
     # Commands
     atom.commands.add 'atom-workspace',
@@ -18,42 +24,40 @@ class JsfmtRunner
     atom.commands.add 'atom-workspace',
         'atom-jsfmt:format-all-open-files', => @formatAllOpen()
 
+    # Message panel that we'll share between editors
+    @messagePanel = new MessagePanelView
+        title: 'jsfmt'
+
     # Editor listeners
-    for editor in atom.workspace.getTextEditors()
-      @registerEditor(editor)
-    # atom.workspaceView.eachEditorView @registerEditor
+    @disposables.add atom.workspace.observeTextEditors (editor) =>
+      @registerEditor editor
 
+    # Close panel if we change editors
+    @disposables.add atom.workspace.onDidChangeActivePaneItem =>
+      @messagePanel.close()
 
+  # Clean up this mess
+  @stop: =>
+    @messagePanel.close()
+    @messagePanel.clear()
+    @messagePanel = null
+    @disposables.dispose()
+
+  # Things to do with an editor once it initializes.
   @registerEditor: (editor) =>
-    # editor = editorView.getEditor()
-    editorView = atom.views.getView(editor)
-
-    # Editor may be created before view
-    if !editor._jsfmt?.errorView
-      errorView = new ErrorView()
-      # editorView.append(errorView)
-
-      editor._jsfmt = {errorView}
-
-    else
-      editorView.append(editor._jsfmt.errorView)
-
-    console.log('format')
-    editor.getBuffer().onWillSave =>
-      editor._jsfmt.errorView.hide()
-
-      # This throws a weird error if I inline this. I don't get why
+    @disposables.add editor.getBuffer().onWillSave =>
+      #TODO: This throws a weird error if I inline this. I don't get why.
       shouldFormat = atom.config.get 'atom-jsfmt.formatOnSave'
-      if shouldFormat and @editorIsJs editor
+      if shouldFormat
         @format(editor)
 
-  @format: (editor) ->
-    # May not be a view for the editor yet.
-    if !editor._jsfmt
-      errorView = new ErrorView()
-      editor._jsfmt = {errorView}
+  # Formats a given editor, assuming it's editing javascript.
+  @format: (editor) =>
+    @messagePanel.close()
 
-    errorView = editor._jsfmt?.errorView
+    # Let's make sure we're editing javascript.
+    return if not @editorIsJs editor
+
     buff = editor.getBuffer()
     oldJs = buff.getText()
     newJs = ''
@@ -62,27 +66,50 @@ class JsfmtRunner
     try
       newJs = jsfmt.format oldJs
     catch error
-      console.error 'Jsfmt:', error.message, error
-      errorView.setMessage(error.message)
+      console.log 'Jsfmt:', error.message, error
+      @messagePanel.clear()
+      @messagePanel.attach()
+      @messagePanel.add new LineMessageView
+          message: error.message
+          className: 'text-error'
+          line: @errorToMessage(error.message)
+
+      # errorView.setMessage(error.message)
       return
 
     # Apply diff only.
     buff.setTextViaDiff newJs
 
-  @formatCurrent: () =>
-    editor = atom.workspace.getActiveTextEditor()
-    return if not @editorIsJs editor
+  # Given an @error, generate an appropriate messageView
+  @errorToMessage: (error) =>
+    line = @errorToLineNumber error
+    console.log(line)
+    if line is -1
+      return new PlainMessageView
+          message: error.message
+          className: 'text-error'
+    else return new LineMessageView
+          message: error.message
+          className: 'text-error'
+          line: line
 
-    formatOnSave = atom.config.get 'atom-jsfmt.formatOnSave'
-    if formatOnSave
-      editor.getBuffer().save()
-    else
-      @format editor
+  @formatCurrent: () =>
+    @format atom.workspace.getActiveTextEditor()
 
   @formatAllOpen: () =>
     editors = atom.workspace.getTextEditors()
     @format editor for editor in editors when @editorIsJs editor
 
-  @editorIsJs: (editor) =>
+  # Is the given editor editing javascript?
+  @editorIsJs: (editor) ->
     return editor.getGrammar().scopeName is 'source.js'
 
+  # Given an error message, returns its line number.
+  @errorToLineNumber: (error) ->
+    pattern = /^Line (\d+):.*/
+    matched = error.message?.match(re)
+
+    if not error.message? or matched.length is not 2
+      return -1
+    else
+      return matched[1]

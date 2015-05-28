@@ -1,6 +1,12 @@
 Changelog
 ---------
 
+v0.7.0
+======
+ * Removed deprecated Atom API calls
+ * Moved to [atom-message-panel](https://github.com/tcarlsen/atom-message-panel)
+ * Minor bug fixes.
+
 v0.6.0
 ======
  * No longer requires a binary (uses pre-release `jsfmt` with a nicer api)

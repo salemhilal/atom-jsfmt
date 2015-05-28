@@ -13,13 +13,16 @@ module.exports =
       title: 'Format on save'
       description: 'Should files be formatted automatically on save?'
       type: 'boolean'
-      default: 'false'
+      default: 'true'
     saveAfterFormatting:    # Whether or not to save after formatting
       title: 'Save after formatting'
       description: 'Should formatting changes be saved immediately?'
       type: 'boolean'
-      default: 'true'
+      default: 'false'
 
   # Start things up
   activate: ->
     JsfmtRunner.start()
+
+  deactivate: ->
+    JsfmtRunner.stop()
