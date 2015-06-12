@@ -11,8 +11,9 @@
     "atom": ">0.50.0"
   },
   "dependencies": {
-    "jsfmt": "0.4.1",
+    "atom-message-panel": "^1.2.4",
     "atom-space-pen-views": "^2.0.3",
-    "atom-message-panel": "^1.2.4"
+    "jsfmt": "0.4.1",
+    "nearest-file": "^0.1.0"
   }
 }

@@ -6,6 +6,7 @@
 jsfmt = require 'jsfmt'
 fs = require 'fs'
 path = require 'path'
+findNearestFile = require 'nearest-file'
 {CompositeDisposable} = require 'atom'
 {MessagePanelView, LineMessageView, PlainMessageView} = require 'atom-message-panel'
 
@@ -36,12 +37,14 @@ class JsfmtRunner
     @disposables.add atom.workspace.onDidChangeActivePaneItem =>
       @messagePanel.close()
 
+
   # Clean up this mess
   @stop: =>
     @messagePanel.close()
     @messagePanel.clear()
     @messagePanel = null
     @disposables.dispose()
+
 
   # Things to do with an editor once it initializes.
   @registerEditor: (editor) =>
@@ -51,6 +54,7 @@ class JsfmtRunner
       if shouldFormat
         @format(editor)
 
+
   # Formats a given editor, assuming it's editing javascript.
   @format: (editor) =>
     @messagePanel.close()
@@ -59,15 +63,21 @@ class JsfmtRunner
     return if not @editorIsJs editor
 
     buff = editor.getBuffer()
+    file = findNearestFile(editor.getPath(), '.jsfmtrc');
     oldJs = buff.getText()
     newJs = ''
+    options = {}
+
+    if file?
+        try
+            options = JSON.parse(file)
+        catch error
+            @errorToMessage(error)
 
     # Attempt to format, log errors
     try
-      newJs = jsfmt.format oldJs
+      newJs = jsfmt.format(oldJs, options)
     catch error
-      console.log 'Jsfmt:', error.message, error
-
       shouldError = atom.config.get 'atom-jsfmt.showErrors'
       if shouldError is true
         @messagePanel.clear()
@@ -109,7 +119,6 @@ class JsfmtRunner
 
     pattern = /^Line (\d+):.*/
     matched = error.message.match(pattern)
-    console.log(matched)
 
     if matched.length is not 2
       return -1

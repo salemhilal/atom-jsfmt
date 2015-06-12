@@ -6,7 +6,7 @@ module.exports =
   config:
     showErrors:             # Whether or not to show the error bar
       title: 'Show errors'
-      description: 'Do you want to see errors jsfmt finds?'
+      description: 'Do you want to know when something goes wrong?'
       type: 'boolean'
       default: 'true'
     formatOnSave:           # Whether or not to format automatically
@@ -19,5 +19,6 @@ module.exports =
   activate: ->
     JsfmtRunner.start()
 
+  # Turn things off
   deactivate: ->
     JsfmtRunner.stop()

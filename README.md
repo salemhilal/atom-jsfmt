@@ -11,7 +11,6 @@ Features
  - **Format command**: Run the `Jsfmt: Format` command to keep your code tidy.
  - **Format on Save**: `atom-jsfmt` will auto-format your javascript on save.
 
-
 Installation
 ------------
 Installation can be done from Atom's package browser (just search for `atom-jsfmt`). Or, if you like it the hard way:
@@ -20,6 +19,12 @@ Installation can be done from Atom's package browser (just search for `atom-jsfm
 apm install atom-jsfmt
 ```
 
+Configuration
+-------------
+Although the defaults are pretty good, you may find yourself wanting to tweak the formatting.
+`atom-jsfmt` looks for the closest `.jsfmtrc` file before formatting (you can [read more about them
+here](https://github.com/rdio/jsfmt#jsfmtrc)). It checks the directory of the current file,
+and keeps moving up directories until it finds something.
 
 Options
 -------
@@ -34,7 +39,7 @@ Options
 To do
 -----
 
- - Allow for input of custom rules
+ - Look for `.jsfmt` files in all the places that the command line tool looks (like `/etc/jsfmt`). 
  - Add searching functionality
  - Flag lines with errors
 

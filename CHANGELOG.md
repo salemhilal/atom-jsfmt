@@ -1,6 +1,10 @@
 Changelog
 ---------
 
+v0.8.0
+======
+ * Added support for `.jsfmtrc` files. 
+
 v0.7.1
 ======
  * Fixed issue with line numbers not being parsed properly
@@ -19,9 +23,9 @@ v0.6.0
  * Optionally saves after formatting (off by default)
  * Merge edits via diff, rather than by replacement (faster for larger files).
  * Disk no longer more up-to-date then editor (oops).
- * No need to enhance path anymore. 
+ * No need to enhance path anymore.
  * Just pretty much works way better.
- 
+
 v0.5.1
 ======
  * Enhances path before running binary.
