@@ -1,30 +1,45 @@
 atom-jsfmt
 ==========
 
-`atom-jsfmt` is a [`jsfmt`][jsfmt] plugin for the Atom text editor. It's pretty nifty.  
+`atom-jsfmt` is a [`jsfmt`][jsfmt] plugin for the Atom text editor. [`jsfmt`][jsfmt] is really good at formatting, searching, and rewriting javascript. It's pretty nifty.  
 
 ![atom-jsfmt in action](demo.gif)
 
 
-Features
---------
- - **Format command**: Run the `Jsfmt: Format` command to keep your code tidy.
- - **Format on Save**: `atom-jsfmt` will auto-format your javascript on save.
+What does it do?
+----------------
 
-Installation
-------------
-Installation can be done from Atom's package browser (just search for `atom-jsfmt`). Or, if you like it the hard way:
+ - **Format your code**: Run the `Jsfmt: Format` command to keep your code well-styled.
+ - **Format on save**: `atom-jsfmt` will auto-format your javascript every time you save, so you don't have to think about it.
+
+
+How do I get it?
+----------------
+
+Installation can be done from Atom's package browser (just search for `atom-jsfmt`). You can also use the `apm` command line installer:
 
 ```bash
 apm install atom-jsfmt
 ```
 
-Configuration
--------------
-Although the defaults are pretty good, you may find yourself wanting to tweak the formatting.
+
+How do I tweak the formatting?
+------------------------------
+
+Although the default style guide is pretty good, you may find yourself wanting to tweak the formatting.
 `atom-jsfmt` looks for the closest `.jsfmtrc` file before formatting (you can [read more about them
 here](https://github.com/rdio/jsfmt#jsfmtrc)). It checks the directory of the current file,
 and keeps moving up directories until it finds something.
+
+For example, if you like your code indented four spaces, your `.jsfmtrc` might look like this:
+
+```json
+{
+    "indent": {
+        "value": "    "
+    }
+}
+```
 
 Options
 -------
@@ -39,8 +54,8 @@ Options
 To do
 -----
 
- - Look for `.jsfmt` files in all the places that the command line tool looks (like `/etc/jsfmt`). 
- - Add searching functionality
+ - Look for `.jsfmtrc` files in all the places that the command line tool looks (like `/etc/.jsfmtrc` or `~/.jsfmtrc`).
+ - Add searching / rewriting functionality
  - Flag lines with errors
 
 

@@ -1,9 +1,12 @@
 Changelog
 ---------
+v0.8.1
+======
+ * Updated documentation, included a `.jsfmtrc` example.
 
 v0.8.0
 ======
- * Added support for `.jsfmtrc` files. 
+ * Added support for `.jsfmtrc` files.
 
 v0.7.1
 ======
