@@ -120,7 +120,7 @@ class JsfmtRunner
     pattern = /^Line (\d+):.*/
     matched = error.message.match(pattern)
 
-    if matched.length is not 2
+    if not matched or matched.length is not 2
       return -1
     else
       return matched[1]
