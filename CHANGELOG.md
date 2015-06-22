@@ -1,5 +1,9 @@
 Changelog
 ---------
+v0.8.2
+======
+ * Fixed bug in which errors without line numbers would cause the app to crash.
+
 v0.8.1
 ======
  * Updated documentation, included a `.jsfmtrc` example.
