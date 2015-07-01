@@ -1,9 +1,10 @@
 atom-jsfmt
 ==========
+![David](https://david-dm.org/bichiliad/atom-jsfmt.svg)
 
 `atom-jsfmt` is a [`jsfmt`][jsfmt] plugin for the Atom text editor. [`jsfmt`][jsfmt] is really good at formatting, searching, and rewriting javascript. It's pretty nifty.  
 
-![atom-jsfmt in action](demo.gif)
+![atom-jsfmt in action](https://github.com/bichiliad/atom-jsfmt/raw/master/demo.gif)
 
 
 What does it do?
