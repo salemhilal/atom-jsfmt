@@ -25,6 +25,9 @@ class JsfmtRunner
     atom.commands.add 'atom-workspace',
         'atom-jsfmt:format-all-open-files', => @formatAllOpen()
 
+    @scopes = ['source.js']
+    @scopes.push 'source.js.jsx' if atom.config.get 'atom-jsfmt.applyToJSXFiles'
+
     # Message panel that we'll share between editors
     @messagePanel = new MessagePanelView
         title: 'jsfmt'
@@ -111,7 +114,7 @@ class JsfmtRunner
 
   # Is the given editor editing javascript?
   @editorIsJs: (editor) ->
-    return editor.getGrammar().scopeName is 'source.js'
+    return @scopes.indexOf(editor.getGrammar().scopeName) > -1
 
   # Given an error message, returns its line number.
   @errorToLineNumber: (error) ->

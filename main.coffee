@@ -14,6 +14,11 @@ module.exports =
       description: 'Should files be formatted automatically on save?'
       type: 'boolean'
       default: 'true'
+    applyToJSXFiles:
+      title: 'Apply to JSX files (.jsx)'
+      description: 'Formats files with the .jsx extension. You should have a jsfmt rule to ignore the actual JSX'
+      type: 'boolean'
+      default: 'false'
 
   # Start things up
   activate: ->
