@@ -10,6 +10,10 @@
   "engines": {
     "atom": ">0.50.0"
   },
+  "keywords": {
+    "javascript",
+    "jsfmt"
+  },
   "dependencies": {
     "atom-message-panel": "^1.2.4",
     "atom-space-pen-views": "^2.0.3",
