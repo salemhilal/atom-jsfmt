@@ -1,5 +1,25 @@
 Changelog
 ---------
+
+v0.8.5
+======
+ * Added CSP workaround which, although gross, is the only fix until one of `jsfmt`’s
+   dependencies updates to the newest version of `acorn`. See more
+   [here](https://github.com/bichiliad/atom-jsfmt/pull/20). Thanks to @mikaa123 for the
+   PR (#20).
+
+
+v0.8.4
+======
+Merged PR
+ * Added proper `jsx` support (thanks @andrewn) with PR #18.
+ * Bumped `jsfmt` version to `0.5.1` (thanks @vdaniuk) with PR #17.
+ * Metadata changes to `package.json`
+
+v0.8.3
+======
+ * *Added david-dm, updated readme
+
 v0.8.2
 ======
  * Fixed bug in which errors without line numbers would cause the app to crash.
