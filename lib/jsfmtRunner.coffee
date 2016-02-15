@@ -3,7 +3,8 @@
 # This replaces jsfmt.coffee and doesn't rely on spawning a child process
 #
 
-jsfmt = require 'jsfmt'
+{allowUnsafeNewFunction} = require 'loophole'
+jsfmt = allowUnsafeNewFunction -> require 'jsfmt'
 fs = require 'fs'
 path = require 'path'
 findNearestFile = require 'nearest-file'
